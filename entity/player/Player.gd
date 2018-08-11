@@ -63,6 +63,7 @@ func move_to(next_position):
 func fall():
 	if dead:
 		return
+	dead = true
 	$AnimationPlayer.play("death_fall")
 	$AnimationPlayer.connect("animation_finished", self, "end_animation", [], CONNECT_ONESHOT)
 	set_process(false)
@@ -82,5 +83,8 @@ func hit():
 		yield($AnimationPlayer, "animation_finished")
 		set_process(true)
 	else:
-		dead = true
 		fall()
+
+func heal(amount):
+	game.hp += amount
+	emit_signal("hp_changed", game.hp)

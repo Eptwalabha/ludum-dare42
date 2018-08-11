@@ -52,11 +52,6 @@ func move_to(next_position):
 	grid.step_at(self)
 	$AnimationPlayer.play("idle")
 
-func shot(bullet):
-	hp -= 1
-	if hp <= 0:
-		explode()
-
 func fall():
 	if dead:
 		return
