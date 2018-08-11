@@ -7,6 +7,7 @@
 
 script = ExtResource( 1 )
 hp = 3
+weight = 1
 next_level = null
 
 [node name="Position2D" type="Position2D" parent="." index="0"]

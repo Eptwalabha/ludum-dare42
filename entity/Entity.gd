@@ -10,6 +10,7 @@ enum {
 
 onready var grid = get_parent()
 export(int) var hp = 3
+export(int, 0, 3) var weight = 1
 var dead
 
 
@@ -26,4 +27,10 @@ func shot(bullet):
 	pass
 
 func get_direction():
+	return false
+
+func fall():
+	pass
+
+func is_foe():
 	return false

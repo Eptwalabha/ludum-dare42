@@ -1,9 +1,11 @@
-extends "res://entity/Entity.gd"
+extends "res://entity/foes/Foe.gd"
 
 var actions = [ IDLE, MOVE, IDLE ]
 export(int) var action_index = 0
+export(int) var explosion_radius = 3
 
 func _ready():
+	$Pivot.position = Vector2()
 	action_index = action_index % actions.size()
 
 func tick():
@@ -37,13 +39,19 @@ func move_to(next_position):
 	
 	yield($AnimationPlayer, "animation_finished")
 	
+	grid.step_at(self)
 	$AnimationPlayer.play("idle")
 
 func shot(bullet):
 	hp -= 1
 	if hp <= 0:
-		dead = true
-		emit_signal("dead", self)
+		explode()
+
+func fall():
+	dead = true
+	$AnimationPlayer.play("fall")
+	yield($AnimationPlayer, "animation_finished")
+	self.queue_free()
 
 func get_direction ():
 	match randi() % 4:
