@@ -2,20 +2,32 @@ extends TileMap
 
 signal room_cleared()
 
-onready var level = get_parent()
+onready var level = get_parent().get_parent()
 var visited = false
 var cleared = false
 
 func _ready():
 	is_room_clear()
-	pass
 
 func request_move(entity, direction):
 	var requested_position = _world_to_map(entity.position) + direction
 	var cellv = get_cellv(requested_position)
-	if cellv < 3 || cellv == 3:
-		return map_to_world(requested_position)
-	return false
+	var target_entity = get_entity_at(requested_position)
+	if target_entity and target_entity != entity:
+		return {
+			"is_available": false,
+			"entity": target_entity
+		}
+	elif cellv < 3 || cellv == 3:
+		return {
+			"is_available": true,
+			"next_position": map_to_world(requested_position),
+			"entity": target_entity
+		}
+	return {
+		"is_available": false,
+		"entity": target_entity
+	}
 
 func step_at(entity):
 	var entity_pos = _world_to_map(entity.position)
@@ -35,11 +47,13 @@ func is_falling(entity):
 	var entity_pos = _world_to_map(entity.position)
 	return get_cellv(entity_pos) == -1
 
-func get_entity_at(position):
-	var cell_pos = _world_to_map(position)
+func get_entity_at(cell_pos):
 	for entity in get_children():
 		if _world_to_map(entity.position) == cell_pos:
 			return entity
+	var player = level.get_player()
+	if _world_to_map(player.position) == cell_pos:
+		return player
 	return null
 
 func move_toward_player(entity):

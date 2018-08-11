@@ -1,6 +1,6 @@
 extends Node
 
-var life = 5
+var hp = 5
 
 func _ready():
 	# Called when the node is added to the scene for the first time.

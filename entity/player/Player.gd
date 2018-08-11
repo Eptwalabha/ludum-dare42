@@ -2,10 +2,13 @@ extends Node2D
 
 signal end_move()
 signal dead(entity)
+signal hp_changed(hp)
 
 onready var level = get_parent()
 onready var grid = null
 var dead = false
+var moving_direction = Vector2()
+var hp = 4
 export(int) var weight = 0
 
 func _ready():
@@ -15,13 +18,19 @@ func set_current_grid(current_grid):
 	grid = current_grid
 
 func _process(delta):
+	if dead:
+		return
 	var direction = _get_direction()
 	if not direction:
 		return
-	var next_position = grid.request_move(self, direction)
-	if next_position:
-		level.tick()
-		move_to(next_position)
+	var destination = grid.request_move(self, direction)
+	if destination.is_available:
+		move_to(destination.next_position)
+	else:
+		var entity = destination.entity
+		if entity:
+			entity.interact_with_player(self)
+			level.tick()
 
 func _get_direction():
 	var direction = Vector2()
@@ -38,7 +47,8 @@ func _get_direction():
 func move_to(next_position):
 	$Pivot.position = - (next_position - position)
 	position = next_position
-	set_process(false)
+	level.tick()
+
 	$AnimationPlayer.play("move")
 	$Tween.interpolate_property(
 			$Pivot, "position",
@@ -47,14 +57,30 @@ func move_to(next_position):
 			Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$Tween.start()
 	yield($AnimationPlayer, "animation_finished")
-	set_process(true)
 	grid.step_at(self)
-	emit_signal("end_move")
+	$AnimationPlayer.play("idle")
 
 func fall():
+	if dead:
+		return
 	$AnimationPlayer.play("death_fall")
 	$AnimationPlayer.connect("animation_finished", self, "end_animation", [], CONNECT_ONESHOT)
 	set_process(false)
 
 func end_animation(t):
 	emit_signal("dead", self)
+
+func _on_Area2D_area_entered(area):
+	pass
+
+func hit():
+	game.hp -= 1
+	emit_signal("hp_changed", game.hp)
+	set_process(false)
+	if game.hp > 0:
+		$AnimationPlayer.play("hurt")
+		yield($AnimationPlayer, "animation_finished")
+		set_process(true)
+	else:
+		dead = true
+		fall()

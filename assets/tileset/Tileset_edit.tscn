@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 32, 32 )
 
-[node name="Tileset" type="Node2D"]
+[node name="Tileset" type="Node2D" index="0"]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -67,6 +67,7 @@ _sections_unfolded = [ "Region" ]
 
 [node name="Sprite8" type="Sprite" parent="." index="7"]
 
+editor/display_folded = true
 position = Vector2( 736, 64 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -95,9 +96,6 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 64, 64, 64 )
 _sections_unfolded = [ "Region" ]
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite9" index="0"]
 
@@ -117,13 +115,11 @@ shape = SubResource( 1 )
 
 editor/display_folded = true
 position = Vector2( 928, 64 )
+scale = Vector2( 1, 1 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 64, 64, 64 )
 _sections_unfolded = [ "Region" ]
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite10" index="0"]
 
