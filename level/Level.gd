@@ -8,6 +8,7 @@ func _ready():
 	$Player.connect("dead", self, "reset")
 	$Player.connect("hp_changed", $Ui, "player_hp_changed")
 	$Timer.connect("timeout", self, "end_tick")
+	center_camera()
 	for room in $Rooms.get_children():
 		room.connect("room_cleared", self, "room_cleared", [], CONNECT_ONESHOT)
 
@@ -44,5 +45,9 @@ func reset(entity):
 	get_tree().reload_current_scene()
 
 func room_cleared():
-	print("youpi")
 	pass
+
+func center_camera():
+	var rect = $Rooms/Start.get_used_rect()
+	$Camera2D.make_current()
+	$Camera2D.position = rect.size * $Rooms/Start.cell_size / 2
