@@ -1,7 +1,7 @@
 extends Node2D
 
 signal end_move()
-signal dead()
+signal dead(entity)
 
 onready var level = get_parent()
 onready var grid = level.get_node("Grid")
@@ -56,4 +56,4 @@ func fall_to_death():
 	set_process(false)
 
 func end_animation(t):
-	emit_signal("dead")
+	emit_signal("dead", self)

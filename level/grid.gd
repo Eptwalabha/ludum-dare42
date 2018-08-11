@@ -1,8 +1,6 @@
 extends TileMap
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+onready var level = get_parent()
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -29,3 +27,13 @@ func decay_tile(entity):
 func is_falling(entity):
 	var entity_pos = world_to_map(entity.position)
 	return get_cellv(entity_pos) == -1
+
+func get_entity_at(position):
+	var cell_pos = world_to_map(position)
+	for entity in get_children():
+		if world_to_map(entity.position) == cell_pos:
+			return entity
+	return null
+
+func move_toward_player(entity):
+	return false

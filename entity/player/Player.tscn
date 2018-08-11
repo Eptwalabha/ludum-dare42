@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://entity/player/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/player.png" type="Texture" id=2]
+[ext_resource path="res://assets/shadow.png" type="Texture" id=2]
+[ext_resource path="res://assets/player.png" type="Texture" id=3]
 
 [sub_resource type="Animation" id=3]
 
@@ -35,7 +36,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Pivot/Sprite:rotation_degrees")
-tracks/2/interp = 1
+tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
@@ -43,7 +44,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, 1440.0 ]
+"values": [ 0.0, 540.0 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Pivot/Sprite:modulate")
@@ -56,6 +57,18 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/Shadow:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -88,6 +101,30 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 0.8, 0.8 ), Vector2( 0.7, 0.9 ), Vector2( 0.7, 0.9 ), Vector2( 0.8, 0.8 ), Vector2( 0.875, 0.715 ), Vector2( 0.7, 0.9 ), Vector2( 0.7, 0.9 ), Vector2( 0.8, 0.8 ), Vector2( 0.8, 0.7125 ), Vector2( 0.8, 0.8 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/Shadow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0.392157 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/Shadow:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.8, 0.2 ), Vector2( 0.7, 0.15 ), Vector2( 0.8, 0.2 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 
@@ -119,6 +156,30 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 0.8, 0.8 ), Vector2( 0.75, 0.85 ), Vector2( 0.85, 0.75 ), Vector2( 0.75, 0.85 ), Vector2( 0.8, 0.8 ), Vector2( 0.8, 0.8 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/Shadow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.14, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 0.27451 ), Color( 1, 1, 1, 0.392157 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/Shadow:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.8, 0.2 ), Vector2( 0.8, 0.2 ) ]
+}
 
 [node name="Player" type="Node2D"]
 
@@ -147,11 +208,19 @@ playback/speed = 1.0
 
 [node name="Pivot" type="Position2D" parent="." index="2"]
 
-[node name="Sprite" type="Sprite" parent="Pivot" index="0"]
+[node name="Shadow" type="Sprite" parent="Pivot" index="0"]
+
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 32, 56 )
+scale = Vector2( 0.8, 0.2 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="Pivot" index="1"]
 
 position = Vector2( 32, 32 )
 scale = Vector2( 0.8, 0.8 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
 
