@@ -14,6 +14,7 @@ var actions = []
 export(int) var damage = 1
 export(int) var action_index = 0
 export(int) var attack_range = 1
+var cool_down = 0
 
 func _ready():
 	$Pivot.position = Vector2()
@@ -22,8 +23,8 @@ func tick():
 	if dead or actions.size() == 0:
 		return
 	
-	if pass_turn:
-		pass_turn = false
+	if cool_down > 0:
+		cool_down -= 1
 		return
 
 	if player_in_range() and can_attack():
@@ -57,7 +58,6 @@ func action_shoot():
 func action_chase():
 	var manhattan = grid.manhattan_vector_to_player(self)
 	var order = get_direction_priority_from_manhattan(manhattan)
-	print(order)
 	for i in order:
 		var direction = _get_direction(i)
 		var next = grid.request_move(self, direction)
@@ -75,12 +75,12 @@ func can_attack():
 	return true
 
 func attack_player():
-	level.get_node("Player").hit(damage)
+	level.get_node("Player").hit(self, damage)
+	cool_down = 1
 
 func get_direction_priority_from_manhattan(manhattan):
 	var dirx = [EAST, WEST]
 	var diry = [SOUTH, NORTH]
-	print(manhattan)
 	if manhattan.x < 0:
 		dirx = [WEST, EAST]
 	if manhattan.y < 0:

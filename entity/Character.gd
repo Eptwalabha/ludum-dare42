@@ -10,6 +10,8 @@ enum DIRECTION {
 signal hp_changed(hp)
 var max_hp = 5
 
+var turn_action = null
+
 func _ready():
 	$Pivot.position = Vector2()
 
@@ -19,8 +21,6 @@ func move_to(next_position):
 	var x = $Pivot.position.x
 	if x != 0:
 		$Pivot/Sprite.flip_h = x > 0
-	
-	set_process(false)
 	
 	$AnimationPlayer.play("move")
 	
@@ -51,16 +51,12 @@ func fall():
 	yield($AnimationPlayer, "animation_finished")
 	emit_signal("died", self)
 
-func hit(amount):
-	_add_hp(- amount)
-	if dead:
-		fall()
-	else:
-		print("aie")
-		set_process(false)
-		$AnimationPlayer.play("hurt")
-		yield($AnimationPlayer, "animation_finished")
-		set_process(true)
+func hit(entity, amount):
+	var damage = {
+		"from": entity,
+		"amount": amount
+	}
+	stack_damages.append(damage)
 
 func heal(amount):
 	_add_hp(amount)
@@ -73,3 +69,29 @@ func _add_hp(amount):
 	elif hp > max_hp:
 		hp = max_hp
 	emit_signal("hp_changed", hp)
+
+func apply_damages():
+	if dead:
+		return
+	var sum = 0
+	var hit = false
+	for damage in stack_damages:
+		hit = true
+		sum += damage.amount
+		level.spawn_damage(self, damage.amount)
+	hp -= sum
+	if hit:
+		hurt()
+	if hp <= 0:
+		died()
+	stack_damages = []
+	return hit
+
+func hurt():
+	$AnimationPlayer.play("hurt")
+
+func died():
+	dead = true
+	$AnimationPlayer.play("fall")
+	yield($AnimationPlayer, "animation_finished")
+	emit_signal("died", self)

@@ -1,7 +1,9 @@
 extends "res://entity/Character.gd"
 
-signal end_move()
 signal key_count_changed(amount)
+
+func _ready():
+	hp = game.hp
 
 func _process(delta):
 	if dead:
@@ -18,12 +20,12 @@ func _process(delta):
 		if entity:
 			entity.interact_with_player(self)
 			if entity.is_foe():
-				entity.hit(1)
+				entity.hit(self, 1)
 	else:
 		if entity:
 			entity.interact_with_player(self)
 			if entity.is_foe():
-				entity.hit(1)
+				entity.hit(self, 1)
 			level.tick()
 
 func _get_direction():

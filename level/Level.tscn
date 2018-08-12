@@ -5,7 +5,7 @@
 [ext_resource path="res://entity/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ui/Ui.tscn" type="PackedScene" id=4]
 
-[node name="Level" type="Node"]
+[node name="Level" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -45,7 +45,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 process_mode = 1
 wait_time = 1.0
-one_shot = false
+one_shot = true
 autostart = false
 
 [node name="Ui" parent="." index="4" instance=ExtResource( 4 )]

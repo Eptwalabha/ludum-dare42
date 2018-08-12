@@ -10,9 +10,11 @@ export(int, 0, 3) var weight = 1
 var pass_turn = false
 var walkable = false
 var dead = false
+var stack_damages = []
 
 func _ready():
 	pass
+
 
 func set_current_grid(current_grid):
 	grid = current_grid
@@ -45,4 +47,10 @@ func is_player():
 	return false
 
 func room_cleared():
+	pass
+
+func prepare_for_turn():
+	set_process(false)
+
+func apply_damages():
 	pass

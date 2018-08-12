@@ -49,6 +49,8 @@ func is_falling(entity):
 
 func get_entity_at(cell_pos):
 	for entity in get_children():
+		if entity.dead:
+			continue
 		if _world_to_map(entity.position) == cell_pos:
 			return entity
 	if _world_to_map(player.position) == cell_pos:
