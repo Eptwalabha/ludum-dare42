@@ -22,6 +22,7 @@ func request_move(entity, direction):
 		return {
 			"is_available": true,
 			"next_position": map_to_world(requested_position),
+			"type": get_cellv(requested_position),
 			"entity": target_entity
 		}
 	return {
