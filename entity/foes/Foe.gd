@@ -36,7 +36,6 @@ func tick():
 	if player_in_range() and can_attack():
 		attack_player()
 	else:
-		action_index = (action_index + 1) % actions.size()
 		match actions[action_index]:
 			MOVE:
 				action_move()
@@ -50,6 +49,7 @@ func tick():
 				action_aim()
 			_:
 				pass
+		action_index = (action_index + 1) % actions.size()
 
 func is_foe():
 	return true
@@ -57,17 +57,12 @@ func is_foe():
 func interact_with_player(player):
 	pass
 
-func action_move():
-	var direction_int = randi() % 4
-	for i in range(0, 3):
-		var direction = _get_direction((direction_int + i) % 4)
-		var next = grid.request_move(self, direction)
-		if next.is_available and next_position_valid(next):
-			move_to(next.next_position)
-			break
-
 func next_position_valid(next):
 	return next.type != -1
+
+func action_move():
+	var random_order = _random_order()
+	_move_to(random_order)
 
 func action_aim():
 	pass
@@ -84,15 +79,34 @@ func action_shoot():
 func action_chase():
 	var manhattan = grid.manhattan_vector_to_player(self)
 	var order = get_direction_priority_from_manhattan(manhattan)
-	for i in order:
-		var direction = _get_direction(i)
-		var next = grid.request_move(self, direction)
-		if next.is_available:
-			move_to(next.next_position)
-			break
+	_move_to(order)
 
 func action_jump():
-	pass
+	var random_order = _random_order()
+	_move_to(random_order, 2, "jump")
+
+func _random_order():
+	var direction_int = randi() % 4
+	var order = []
+	for i in range(0, 4):
+		order.append((direction_int + i) % 4)
+	return order
+
+func _move_to(order, distance = 1, animation = "move"):
+	var picky = null
+	var moved = false
+	for i in order:
+		var direction = _get_direction(i % 4) * distance
+		var next = grid.request_move(self, direction)
+		if next.is_available:
+			if not next_position_valid(next):
+				picky = next
+			else:
+				move_to(next.next_position, animation)
+				moved = true
+				break
+	if not moved and picky:
+		move_to(picky.next_position, animation)
 
 func player_in_range():
 	return grid.manhattan_dist_to_player(self) <= attack_range

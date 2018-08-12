@@ -65,6 +65,7 @@ func _update_player():
 
 func reset(entity):
 	game.hp = 5
+	$Player.dead = false
 	get_tree().reload_current_scene()
 
 func room_cleared():
@@ -85,6 +86,7 @@ func spawn_bullet(owner, position, direction, speed):
 	var velocity = (direction * speed) * current_grid.cell_size
 	var bullet = BulletFactory.shoot_at(position, velocity)
 	bullet.set_owner(owner)
+	bullet.damage = owner.damage
 	current_grid.add_child(bullet)
 	bullet.tick()
 

@@ -1,7 +1,7 @@
 extends "res://entity/foes/Foe.gd"
 
 func _ready():
-	actions = [ MOVE, AIM, SHOOT, MOVE ]
+	actions = [ JUMP, AIM, SHOOT, MOVE ]
 
 func action_aim():
 	look_entity(player)

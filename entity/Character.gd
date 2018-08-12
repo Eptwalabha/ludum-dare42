@@ -15,14 +15,14 @@ var turn_action = null
 func _ready():
 	$Pivot.position = Vector2()
 
-func move_to(next_position):
+func move_to(next_position, animation):
 	$Pivot.position = - (next_position - position)
 	position = next_position
 	var x = $Pivot.position.x
 	if x != 0:
 		$Pivot/Sprite.flip_h = x > 0
 	
-	$AnimationPlayer.play("move")
+	$AnimationPlayer.play(animation)
 	
 	$Tween.interpolate_property(
 			$Pivot, "position",
@@ -112,7 +112,7 @@ func _on_Area2D_area_entered(area):
 	var entity = bullet.owner_entity
 	if entity == self:
 		return
-	hit(entity, entity.damage)
+	hit(entity, bullet.damage)
 	bullet.queue_free()
 
 func get_area_entity(area):

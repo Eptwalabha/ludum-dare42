@@ -1,6 +1,7 @@
 extends "res://entity/Entity.gd"
 
 var owner_entity = null
+var damage = 1
 var velocity = Vector2(1, 0)
 var ttl = 5
 
