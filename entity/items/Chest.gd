@@ -2,9 +2,6 @@ extends "res://entity/Entity.gd"
 
 var opened = false
 
-func _ready():
-	pass
-
 func interact_with_player(player):
 	if opened:
 		return

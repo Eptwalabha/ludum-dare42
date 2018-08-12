@@ -13,22 +13,18 @@ func request_move(entity, direction):
 	var requested_position = _world_to_map(entity.position) + direction
 	var cellv = get_cellv(requested_position)
 	var target_entity = get_entity_at(requested_position)
-	if target_entity and target_entity != entity:
-		return {
-			"is_available": false,
-			"entity": target_entity
-		}
-	elif cellv < 3 || cellv == 3:
-		return {
-			"is_available": true,
-			"next_position": map_to_world(requested_position),
-			"type": get_cellv(requested_position),
-			"entity": target_entity
-		}
-	return {
+	var response = {
 		"is_available": false,
 		"entity": target_entity
 	}
+	if can_walk_on_floor(cellv):
+		response.is_available = target_entity == null or target_entity == entity or target_entity.walkable
+		response.next_position = map_to_world(requested_position)
+		response.type = get_cellv(requested_position)
+	return response
+
+func can_walk_on_floor(type):
+	return type <= 3
 
 func step_at(entity):
 	var entity_pos = _world_to_map(entity.position)

@@ -3,6 +3,7 @@ extends Node2D
 signal end_move()
 signal dead(entity)
 signal hp_changed(hp)
+signal key_count_changed(amount)
 
 onready var level = get_parent()
 onready var grid = null
@@ -24,10 +25,12 @@ func _process(delta):
 	if not direction:
 		return
 	var destination = grid.request_move(self, direction)
+	var entity = destination.entity
 	if destination.is_available:
 		move_to(destination.next_position)
+		if entity:
+			entity.interact_with_player(self)
 	else:
-		var entity = destination.entity
 		if entity:
 			entity.interact_with_player(self)
 			level.tick()
@@ -88,3 +91,8 @@ func hit():
 func heal(amount):
 	game.hp += amount
 	emit_signal("hp_changed", game.hp)
+
+func use_key():
+	game.key -= 1
+	emit_signal("key_count_changed", game.key)
+	

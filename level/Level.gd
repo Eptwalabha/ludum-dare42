@@ -50,4 +50,3 @@ func room_cleared():
 func center_camera():
 	var rect = $Rooms/Start.get_used_rect()
 	$Camera2D.position = rect.size * $Rooms/Start.cell_size / 2
-	#$Camera2D.make_current()
