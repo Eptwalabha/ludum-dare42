@@ -6,7 +6,7 @@ func _ready():
 	$Player.connect("end_move", self, "end_tick")
 	$Player.set_current_grid(current_grid)
 	$Player.connect("dead", self, "reset")
-	$Player.connect("hp_changed", $Ui, "player_hp_changed")
+	$Ui.connect_player($Player)
 	$Timer.connect("timeout", self, "end_tick")
 	center_camera()
 	for room in $Rooms.get_children():

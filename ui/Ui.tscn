@@ -2,7 +2,7 @@
 
 [ext_resource path="res://ui/Ui.gd" type="Script" id=1]
 
-[node name="Ui" type="CanvasLayer"]
+[node name="Ui" type="CanvasLayer" index="0"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -42,7 +42,7 @@ custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 _sections_unfolded = [ "custom_constants" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ControlNode/MarginContainer" index="0"]
+[node name="HBoxContainer" type="VBoxContainer" parent="ControlNode/MarginContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -51,7 +51,7 @@ anchor_bottom = 0.0
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0
-margin_bottom = 24.0
+margin_bottom = 42.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -68,6 +68,28 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1004.0
 margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="Key" type="Label" parent="ControlNode/MarginContainer/HBoxContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 18.0
+margin_right = 1004.0
+margin_bottom = 32.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2

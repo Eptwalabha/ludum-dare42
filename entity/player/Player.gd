@@ -92,6 +92,10 @@ func heal(amount):
 	game.hp += amount
 	emit_signal("hp_changed", game.hp)
 
+func pick_key():
+	game.key += 1
+	emit_signal("key_count_changed", game.key)
+
 func use_key():
 	game.key -= 1
 	emit_signal("key_count_changed", game.key)
