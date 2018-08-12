@@ -103,3 +103,17 @@ func attack_entity(entity, damage):
 
 func look_entity(entity):
 	$Pivot/Sprite.flip_h = entity.position.x < position.x
+
+
+func _on_Area2D_area_entered(area):
+	var bullet = get_area_entity(area)
+	if not bullet.projectile:
+		return
+	var entity = bullet.owner_entity
+	if entity == self:
+		return
+	hit(entity, entity.damage)
+	bullet.queue_free()
+
+func get_area_entity(area):
+	return area.get_parent().get_parent()

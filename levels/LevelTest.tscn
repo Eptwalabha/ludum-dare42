@@ -6,7 +6,7 @@
 [ext_resource path="res://entity/foes/MonsterGun.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entity/items/Chest.tscn" type="PackedScene" id=5]
 
-[node name="Level" instance=ExtResource( 1 )]
+[node name="Level" index="0" instance=ExtResource( 1 )]
 
 [node name="Start" parent="Rooms" index="0"]
 
@@ -27,8 +27,6 @@ _sections_unfolded = [ "Transform" ]
 [node name="MonsterGun" parent="Rooms/Start" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 576, 192 )
-hp = 3
-weight = 1
 
 [node name="Chest" parent="Rooms/Start" index="3" instance=ExtResource( 5 )]
 
