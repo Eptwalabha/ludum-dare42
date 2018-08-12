@@ -1,5 +1,12 @@
 extends "res://entity/Entity.gd"
 
+enum DIRECTION {
+	EAST,
+	SOUTH,
+	WEST,
+	NORTH
+}
+
 signal hp_changed(hp)
 var max_hp = 5
 
@@ -9,6 +16,9 @@ func _ready():
 func move_to(next_position):
 	$Pivot.position = - (next_position - position)
 	position = next_position
+	var x = $Pivot.position.x
+	if x != 0:
+		$Pivot/Sprite.flip_h = x > 0
 	
 	set_process(false)
 	
@@ -26,6 +36,13 @@ func move_to(next_position):
 	grid.step_at(self)
 	$AnimationPlayer.play("idle")
 
+func _get_direction(direction):
+	match direction:
+		EAST: return Vector2(1, 0)
+		SOUTH: return Vector2(0, 1)
+		WEST: return Vector2(-1, 0)
+		NORTH: return Vector2(0, -1)
+
 func fall():
 	if dead:
 		return
@@ -39,6 +56,7 @@ func hit(amount):
 	if dead:
 		fall()
 	else:
+		print("aie")
 		set_process(false)
 		$AnimationPlayer.play("hurt")
 		yield($AnimationPlayer, "animation_finished")

@@ -74,3 +74,12 @@ func update_entities():
 
 func _world_to_map(entity_position):
 	return world_to_map(entity_position + position)
+
+func manhattan_vector_to_player(entity):
+	var pos = _world_to_map(entity.position)
+	var player_pos = _world_to_map(player.position)
+	return Vector2(player_pos.x - pos.x, player_pos.y - pos.y)
+
+func manhattan_dist_to_player(entity):
+	var v = manhattan_vector_to_player(entity)
+	return abs(v.x) + abs(v.y)

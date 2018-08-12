@@ -8,7 +8,7 @@
 
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
-"loop": true,
+"loop": false,
 "name": "default",
 "speed": 5.0
 } ]
@@ -19,7 +19,6 @@ script = ExtResource( 2 )
 
 [node name="Sprite" parent="Pivot" index="1"]
 
-modulate = Color( 1, 1, 1, 1 )
 frames = SubResource( 1 )
 
 

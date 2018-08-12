@@ -17,9 +17,13 @@ func _process(delta):
 		move_to(destination.next_position)
 		if entity:
 			entity.interact_with_player(self)
+			if entity.is_foe():
+				entity.hit(1)
 	else:
 		if entity:
 			entity.interact_with_player(self)
+			if entity.is_foe():
+				entity.hit(1)
 			level.tick()
 
 func _get_direction():

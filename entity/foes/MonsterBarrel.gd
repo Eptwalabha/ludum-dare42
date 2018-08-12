@@ -12,9 +12,5 @@ func action_move():
 			move_to(next.next_position)
 			break
 
-func _get_direction(direction):
-	match direction:
-		0: return Vector2(-1, 0)
-		1: return Vector2(1, 0)
-		2: return Vector2(0, -1)
-		_: return Vector2(0, 1)
+func can_attack():
+	return false
