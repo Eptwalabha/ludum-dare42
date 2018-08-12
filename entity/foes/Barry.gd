@@ -1,4 +1,4 @@
-extends "res://entity/foes/Foe.gd"
+extends "res://entity/Entity.gd"
 
 var actions = [ IDLE, MOVE, IDLE ]
 export(int) var action_index = 0
@@ -80,3 +80,6 @@ func interact_with_player(player):
 
 func _on_Area2D_area_entered(area):
 	pass
+
+func is_foe():
+	return true

@@ -2,12 +2,6 @@ extends Node2D
 
 signal died(entity)
 
-enum {
-	MOVE,
-	IDLE,
-	SHOOT
-}
-
 var grid = null
 var level = null
 
