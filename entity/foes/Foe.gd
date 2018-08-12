@@ -58,7 +58,16 @@ func interact_with_player(player):
 	pass
 
 func action_move():
-	pass
+	var direction_int = randi() % 4
+	for i in range(0, 3):
+		var direction = _get_direction((direction_int + i) % 4)
+		var next = grid.request_move(self, direction)
+		if next.is_available and next_position_valid(next):
+			move_to(next.next_position)
+			break
+
+func next_position_valid(next):
+	return next.type != -1
 
 func action_aim():
 	pass

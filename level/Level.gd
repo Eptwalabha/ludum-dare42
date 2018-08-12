@@ -86,6 +86,7 @@ func spawn_bullet(owner, position, direction, speed):
 	var bullet = BulletFactory.shoot_at(position, velocity)
 	bullet.set_owner(owner)
 	current_grid.add_child(bullet)
+	bullet.tick()
 
 func _timeout(function_name, wait_time):
 	$Timer.wait_time = wait_time

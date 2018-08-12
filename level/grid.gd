@@ -18,7 +18,8 @@ func request_move(entity, direction):
 	var target_entity = get_entity_at(requested_position)
 	var response = {
 		"is_available": false,
-		"entity": target_entity
+		"entity": target_entity,
+		"type": -1
 	}
 	if can_walk_on_floor(cellv):
 		response.is_available = target_entity == null or target_entity == entity or target_entity.walkable
