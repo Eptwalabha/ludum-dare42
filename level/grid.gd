@@ -2,12 +2,15 @@ extends TileMap
 
 signal room_cleared()
 
-onready var level = get_parent().get_parent()
+var player = null setget set_player
 var visited = false
 var cleared = false
 
 func _ready():
 	is_room_clear()
+
+func set_player(current_player):
+	player = current_player
 
 func request_move(entity, direction):
 	var requested_position = _world_to_map(entity.position) + direction
@@ -48,7 +51,6 @@ func get_entity_at(cell_pos):
 	for entity in get_children():
 		if _world_to_map(entity.position) == cell_pos:
 			return entity
-	var player = level.get_player()
 	if _world_to_map(player.position) == cell_pos:
 		return player
 	return null

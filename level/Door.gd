@@ -30,8 +30,7 @@ func unlock():
 	open()
 
 func _on_Area2D_area_entered(area):
-	var level = grid.get_parent().get_parent()
-	if area.get_parent().get_parent() == level.get_player():
+	if area.get_parent().get_parent().is_player():
 		level.next_level(self)
 
 func interact_with_player(player):

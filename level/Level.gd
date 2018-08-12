@@ -11,12 +11,18 @@ func _ready():
 	center_camera()
 	for room in $Rooms.get_children():
 		room.connect("room_cleared", self, "room_cleared", [], CONNECT_ONESHOT)
+	set_up_entities()
+	$Rooms/Start.player = $Player
+
+func set_up_entities():
+	$Player.set_current_grid(current_grid)
+	$Player.set_level(self)
+	for entity in current_grid.get_children():
+		entity.set_current_grid(current_grid)
+		entity.set_level(self)
 
 func get_current_grid():
 	return current_grid
-
-func get_player():
-	return $Player
 
 func _process(delta):
 	pass

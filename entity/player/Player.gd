@@ -1,23 +1,11 @@
-extends Node2D
+extends "res://entity/Entity.gd"
 
 signal end_move()
 signal dead(entity)
 signal hp_changed(hp)
 signal key_count_changed(amount)
 
-onready var level = get_parent()
-onready var grid = null
-var dead = false
-var walkable = false
 var moving_direction = Vector2()
-var hp = 4
-export(int) var weight = 0
-
-func _ready():
-	pass
-
-func set_current_grid(current_grid):
-	grid = current_grid
 
 func _process(delta):
 	if dead:
@@ -100,4 +88,6 @@ func pick_key():
 func use_key():
 	game.key -= 1
 	emit_signal("key_count_changed", game.key)
-	
+
+func is_player():
+	return true
