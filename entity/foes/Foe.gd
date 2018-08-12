@@ -75,7 +75,7 @@ func can_attack():
 	return true
 
 func attack_player():
-	level.get_node("Player").hit(self, damage)
+	attack_entity(level.get_node("Player"), damage)
 	cool_down = 1
 
 func get_direction_priority_from_manhattan(manhattan):

@@ -95,3 +95,9 @@ func died():
 	$AnimationPlayer.play("fall")
 	yield($AnimationPlayer, "animation_finished")
 	emit_signal("died", self)
+
+func attack_entity(entity, damage):
+	$Pivot/Sprite.flip_h = entity.position.x < position.x
+	entity.hit(self, damage)
+	$AnimationPlayer.play("attack")
+	

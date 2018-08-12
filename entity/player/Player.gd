@@ -20,12 +20,12 @@ func _process(delta):
 		if entity:
 			entity.interact_with_player(self)
 			if entity.is_foe():
-				entity.hit(self, 1)
+				attack_entity(entity, 1)
 	else:
 		if entity:
 			entity.interact_with_player(self)
 			if entity.is_foe():
-				entity.hit(self, 1)
+				attack_entity(entity, 1)
 			level.tick()
 
 func _get_direction():
