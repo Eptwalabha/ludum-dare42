@@ -38,3 +38,6 @@ func fall():
 
 func is_foe():
 	return false
+
+func room_cleared():
+	pass

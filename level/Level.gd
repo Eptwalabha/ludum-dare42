@@ -45,8 +45,12 @@ func reset(entity):
 	get_tree().reload_current_scene()
 
 func room_cleared():
-	pass
+	for entity in current_grid.get_children():
+		entity.room_cleared()
 
 func center_camera():
 	var rect = $Rooms/Start.get_used_rect()
 	$Camera2D.position = rect.size * $Rooms/Start.cell_size / 2
+
+func next_level(door):
+	print("load new level")

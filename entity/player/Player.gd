@@ -8,6 +8,7 @@ signal key_count_changed(amount)
 onready var level = get_parent()
 onready var grid = null
 var dead = false
+var walkable = false
 var moving_direction = Vector2()
 var hp = 4
 export(int) var weight = 0
