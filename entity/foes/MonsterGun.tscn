@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://entity/foes/Foe.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity/foes/MonsterGun.gd" type="Script" id=2]
+
+[node name="MonsterGun" index="0" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="ArmJoin" type="Position2D" parent="Pivot/Sprite" index="0"]
+
+[node name="Gun" type="Sprite" parent="Pivot/Sprite/ArmJoin" index="0"]
+
+scale = Vector2( 1, 1 )
+_sections_unfolded = [ "Visibility" ]
+
+

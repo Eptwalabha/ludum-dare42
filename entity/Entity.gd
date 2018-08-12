@@ -10,6 +10,7 @@ export(int, 0, 3) var weight = 1
 var pass_turn = false
 var walkable = false
 var dead = false
+var projectile = false
 var stack_damages = []
 
 func _ready():

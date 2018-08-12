@@ -97,7 +97,9 @@ func died():
 	emit_signal("died", self)
 
 func attack_entity(entity, damage):
-	$Pivot/Sprite.flip_h = entity.position.x < position.x
+	look_entity(entity)
 	entity.hit(self, damage)
 	$AnimationPlayer.play("attack")
-	
+
+func look_entity(entity):
+	$Pivot/Sprite.flip_h = entity.position.x < position.x

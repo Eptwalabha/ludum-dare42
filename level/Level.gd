@@ -1,6 +1,7 @@
 extends Node
 
 onready var current_grid = $Rooms/Start
+onready var BulletFactory = preload("res://entity/weapon/BulletFactory.tscn").instance()
 
 func _ready():
 	center_camera()
@@ -79,6 +80,12 @@ func next_level(door):
 
 func spawn_damage(entity, amount):
 	pass
+
+func spawn_bullet(owner, position, direction, speed):
+	var velocity = (direction * speed) * current_grid.cell_size
+	var bullet = BulletFactory.shoot_at(position, velocity)
+	bullet.set_owner(owner)
+	current_grid.add_child(bullet)
 
 func _timeout(function_name, wait_time):
 	$Timer.wait_time = wait_time

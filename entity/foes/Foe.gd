@@ -7,7 +7,8 @@ enum ACTION {
 	IDLE,
 	SHOOT,
 	CHASE,
-	JUMP
+	JUMP,
+	AIM
 }
 
 var actions = []
@@ -15,9 +16,14 @@ export(int) var damage = 1
 export(int) var action_index = 0
 export(int) var attack_range = 1
 var cool_down = 0
+var player
 
 func _ready():
 	$Pivot.position = Vector2()
+
+func set_level(current_level):
+	level = current_level
+	player = level.get_node("Player")
 
 func tick():
 	if dead or actions.size() == 0:
@@ -40,6 +46,8 @@ func tick():
 				action_chase()
 			JUMP:
 				action_jump()
+			AIM:
+				action_aim()
 			_:
 				pass
 
@@ -52,8 +60,17 @@ func interact_with_player(player):
 func action_move():
 	pass
 
-func action_shoot():
+func action_aim():
 	pass
+
+func action_shoot():
+	look_entity(player)
+	var direction = (player.position - position).normalized()
+	var bullet_position = position
+	if get_node("Pivot/Sprite/ArmJoin"):
+		bullet_position = get_node("Pivot/Sprite/ArmJoin").global_position
+	level.spawn_bullet(self, bullet_position, direction, 2)
+	$AnimationPlayer.play("shoot")
 
 func action_chase():
 	var manhattan = grid.manhattan_vector_to_player(self)
@@ -75,7 +92,7 @@ func can_attack():
 	return true
 
 func attack_player():
-	attack_entity(level.get_node("Player"), damage)
+	attack_entity(player, damage)
 	cool_down = 1
 
 func get_direction_priority_from_manhattan(manhattan):
@@ -88,5 +105,3 @@ func get_direction_priority_from_manhattan(manhattan):
 	if abs(manhattan.x) >= abs(manhattan.y):
 		return [dirx[0], diry[0], dirx[1], diry[1]]
 	return [diry[0], dirx[0], diry[1], dirx[1]]
-	
-	

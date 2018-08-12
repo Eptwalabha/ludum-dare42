@@ -49,7 +49,7 @@ func is_falling(entity):
 
 func get_entity_at(cell_pos):
 	for entity in get_children():
-		if entity.dead:
+		if entity.dead or entity.projectile:
 			continue
 		if _world_to_map(entity.position) == cell_pos:
 			return entity
@@ -70,9 +70,10 @@ func is_room_clear():
 
 func update_entities():
 	for entity in get_children():
-		if not entity.dead:
-			if is_falling(entity):
-				entity.fall()
+		if entity.dead and entity.projectile:
+			continue
+		if is_falling(entity):
+			entity.fall()
 
 func _world_to_map(entity_position):
 	return world_to_map(entity_position + position)
