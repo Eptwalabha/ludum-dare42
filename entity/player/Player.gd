@@ -1,18 +1,16 @@
-extends "res://entity/Entity.gd"
+extends "res://entity/Character.gd"
 
 signal end_move()
-signal dead(entity)
-signal hp_changed(hp)
 signal key_count_changed(amount)
-
-var moving_direction = Vector2()
 
 func _process(delta):
 	if dead:
 		return
+
 	var direction = _get_direction()
 	if not direction:
 		return
+
 	var destination = grid.request_move(self, direction)
 	var entity = destination.entity
 	if destination.is_available:
@@ -51,35 +49,6 @@ func move_to(next_position):
 	yield($AnimationPlayer, "animation_finished")
 	grid.step_at(self)
 	$AnimationPlayer.play("idle")
-
-func fall():
-	if dead:
-		return
-	dead = true
-	$AnimationPlayer.play("death_fall")
-	$AnimationPlayer.connect("animation_finished", self, "end_animation", [], CONNECT_ONESHOT)
-	set_process(false)
-
-func end_animation(t):
-	emit_signal("dead", self)
-
-func _on_Area2D_area_entered(area):
-	pass
-
-func hit():
-	game.hp -= 1
-	emit_signal("hp_changed", game.hp)
-	set_process(false)
-	if game.hp > 0:
-		$AnimationPlayer.play("hurt")
-		yield($AnimationPlayer, "animation_finished")
-		set_process(true)
-	else:
-		fall()
-
-func heal(amount):
-	game.hp += amount
-	emit_signal("hp_changed", game.hp)
 
 func pick_key():
 	game.key += 1

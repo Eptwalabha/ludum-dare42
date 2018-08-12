@@ -32,10 +32,17 @@ func fall():
 	dead = true
 	$AnimationPlayer.play("fall")
 	yield($AnimationPlayer, "animation_finished")
-	self.queue_free()
+	emit_signal("died", self)
 
 func hit(amount):
 	_add_hp(- amount)
+	if dead:
+		fall()
+	else:
+		set_process(false)
+		$AnimationPlayer.play("hurt")
+		yield($AnimationPlayer, "animation_finished")
+		set_process(true)
 
 func heal(amount):
 	_add_hp(amount)

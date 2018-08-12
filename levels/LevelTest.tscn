@@ -26,8 +26,6 @@ _sections_unfolded = [ "Transform" ]
 [node name="MonsterBarrel" parent="Rooms/Start" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 576, 64 )
-hp = 3
-weight = 1
 
 [node name="Player" parent="." index="1"]
 

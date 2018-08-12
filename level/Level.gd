@@ -5,7 +5,7 @@ onready var current_grid = $Rooms/Start
 func _ready():
 	$Player.connect("end_move", self, "end_tick")
 	$Player.set_current_grid(current_grid)
-	$Player.connect("dead", self, "reset")
+	$Player.connect("died", self, "reset")
 	$Ui.connect_player($Player)
 	$Timer.connect("timeout", self, "end_tick")
 	center_camera()
