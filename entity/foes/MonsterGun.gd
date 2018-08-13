@@ -6,7 +6,6 @@ func _ready():
 func action_aim():
 	look_entity(player)
 	$Pivot/Sprite.play("aim")
-	$Pivot/Sprite/ArmJoin/Gun.visible = true
 	point_arm_at(player)
 	aim = player.position
 

@@ -36,8 +36,8 @@ func available_template(level):
 	elif level < 10:
 		return [4, 5, 6, 7, 8, 9, 10]
 	elif level < 20:
-		return [6, 7]
-	return [1]
+		return [4, 5, 6, 7, 8, 9, 10]
+	return [4, 5, 6, 7, 8, 9, 10]
 
 func nbr_foes(level):
 	if level < 5:

@@ -15,5 +15,4 @@ func _process(delta):
 func _on_TextureButton_pressed():
 	$AnimationPlayer.play("fadeout")
 	yield($AnimationPlayer, "animation_finished")
-	game.reset()
-	get_tree().change_scene("res://level/Level.tscn")
+	get_tree().change_scene("res://game/StoryScreen.tscn")

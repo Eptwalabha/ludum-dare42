@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ Color( 0.875, 0.608959, 0.0444336, 1 ), Color( 0.875, 0.608959, 0.0444336, 0 ) ]
 }
 
-[node name="Chest" type="Node2D" index="0"]
+[node name="Chest" type="Node2D"]
 
 script = ExtResource( 1 )
 hp = 3
@@ -42,7 +42,6 @@ blend_times = [  ]
 
 [node name="Sprite" type="Sprite" parent="Position2D" index="0"]
 
-modulate = Color( 0.875, 0.608959, 0.0444336, 1 )
 position = Vector2( 32, 32 )
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 2 )

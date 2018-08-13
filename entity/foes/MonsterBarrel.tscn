@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://entity/foes/Foe.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entity/foes/MonsterBarrel.gd" type="Script" id=2]
-[ext_resource path="res://assets/foe-barry.png" type="Texture" id=3]
+[ext_resource path="res://assets/monsters/barrel.png" type="Texture" id=3]
+[ext_resource path="res://assets/monsters/barrel-prop.png" type="Texture" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -23,8 +24,24 @@ position = Vector2( 32, 32 )
 rotation = 0.0
 frames = SubResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="Pivot/Sprite/Position2D" index="0"]
+
+position = Vector2( -18.0762, -21.8852 )
+rotation = -0.810303
+texture = ExtResource( 4 )
+
 [node name="Area2D" parent="Pivot" index="2"]
 
-visible = true
+position = Vector2( 32, 32 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="area_entered" from="Pivot/Area2D" to="." method="_on_Area2D_area_entered"]
 
 

@@ -72,7 +72,7 @@ tracks/1/keys = {
 "values": [ Color( 0.53125, 0.53125, 0.53125, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[node name="Menu" type="Node"]
+[node name="Menu" type="Node" index="0"]
 
 script = ExtResource( 1 )
 

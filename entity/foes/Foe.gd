@@ -75,8 +75,8 @@ func action_shoot():
 		direction = (aim - position).normalized()
 		aim = null
 	var bullet_position = position
-	if get_node("Pivot/Sprite/ArmJoin"):
-		bullet_position = get_node("Pivot/Sprite/ArmJoin").global_position
+	if get_node("Pivot/Sprite/Position2D"):
+		bullet_position = get_node("Pivot/Sprite/Position2D").global_position
 	level.spawn_bullet(self, bullet_position, direction, 1.5)
 	$AnimationPlayer.play("shoot")
 

@@ -26,6 +26,8 @@ func revive():
 func move_to(next_position, animation):
 	$Pivot.position = - (next_position - position)
 	position = next_position
+	if $Pivot.position.x != 0:
+		point_east($Pivot.position.x > 0)
 	var x = $Pivot.position.x
 	if x != 0:
 		$Pivot/Sprite.flip_h = x > 0
@@ -115,7 +117,14 @@ func attack_entity(entity, damage):
 	$AnimationPlayer.play("attack")
 
 func look_entity(entity):
-	$Pivot/Sprite.flip_h = entity.position.x < position.x
+	point_east(entity.position.x < position.x)
+	
+func point_east(point_east):
+	if point_east:
+		$Pivot/Sprite/Position2D.scale.x = -1
+	else:
+		$Pivot/Sprite/Position2D.scale.x = 1
+	$Pivot/Sprite.flip_h = point_east
 
 
 func _on_Area2D_area_entered(area):

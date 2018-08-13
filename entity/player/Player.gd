@@ -49,6 +49,8 @@ func _get_direction():
 func move_to(next_position):
 	$Pivot.position = - (next_position - position)
 	position = next_position
+	if $Pivot.position.x != 0:
+		point_east($Pivot.position.x > 0)
 	level.tick()
 
 	$AnimationPlayer.play("move")
@@ -61,6 +63,14 @@ func move_to(next_position):
 	yield($AnimationPlayer, "animation_finished")
 	grid.step_at(self)
 	$AnimationPlayer.play("idle")
+
+#func point_east(point_east):
+#	if point_east:
+#		$Pivot/Sprite/Position2D.scale.x = -1
+#	else:
+#		$Pivot/Sprite/Position2D.scale.x = 1
+#	$Pivot/Sprite.flip_h = flip
+	
 
 func pick_key():
 	game.key += 1

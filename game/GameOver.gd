@@ -1,7 +1,12 @@
 extends Node
 
 func _ready():
-	$Control/VBoxContainer/Label.text = "Too bad, you reached level -%d" % game.level
+	$AnimationPlayer.play_backwards("fadeout")
+	yield($AnimationPlayer, "animation_finished")
+	find_node("Play").connect("pressed", self, "_on_Play_pressed", [], CONNECT_ONESHOT)
 
-func _on_Menu_pressed():
-	get_tree().change_scene("res://game/MenuScreen.tscn")
+func _on_Play_pressed():
+	$AnimationPlayer.play("fadeout")
+	yield($AnimationPlayer, "animation_finished")
+	game.reset()
+	get_tree().change_scene("res://level/Level.tscn")
