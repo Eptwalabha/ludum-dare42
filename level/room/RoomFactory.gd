@@ -1,10 +1,10 @@
 extends Node
 
-var Room_1 = preload("res://level/room/Room_1.tscn")
 var FoeFactory = preload("res://entity/foes/FoeFactory.tscn").instance()
 
 func generate(level):
-	var room = Room_1.instance()
+	var room_nbr = room_nbr(level)
+	var room = load("res://level/room/templates/Room%d.tscn" % room_nbr).instance()
 	var foes = spawn_foes(level)
 	room.position = Vector2()
 	room.init()
@@ -15,8 +15,16 @@ func generate(level):
 	if not spawn_chest and spawn_chest_when_room_cleared(level):
 		room.spawn_chest_when_cleared()
 	room.set_foes(foes)
-	room.percent_restoration = percent_restoration(level)
+	var percent_restoration = percent_restoration(level)
+	room.set_percent_restoration(percent_restoration)
 	return room
+
+func room_nbr(level):
+	var id = null
+	while id == null or id == game.last_template_id:
+		id = randi() % 9 +  1
+	game.last_template_id = id
+	return 10
 
 func nbr_foes(level):
 	if level < 5:
@@ -45,15 +53,14 @@ func spawn_foes(level):
 
 func is_door_locked(level):
 	if level < 3:
-		return false
+		return true
 	elif level == 3:
 		return true
 	elif level < 10:
 		return randf() < 0.5
 	elif level < 20:
 		return randf() < 0.8
-	else:
-		return true
+	return true
 
 func spawn_chest_when_room_cleared(level):
 	if level < 5:
@@ -62,8 +69,7 @@ func spawn_chest_when_room_cleared(level):
 		return randf() < 0.5
 	elif level < 20:
 		return randf() < 0.2
-	else:
-		return false
+	return false
 
 func spawn_chest(level):
 	if level == 1:
@@ -72,13 +78,11 @@ func spawn_chest(level):
 		return randf() < 0.4
 	elif level < 20:
 		return randf() < 0.2
-	else:
-		return randf() < 0.1
+	return randf() < 0.1
 
 func percent_restoration(level):
 	if level < 10:
 		return .9
 	elif level < 20:
 		return .7
-	else:
-		return .5
+	return .5

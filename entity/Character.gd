@@ -8,6 +8,7 @@ enum DIRECTION {
 }
 
 signal hp_changed(hp)
+signal revive()
 
 var max_hp = 5
 

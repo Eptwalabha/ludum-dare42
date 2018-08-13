@@ -77,7 +77,13 @@ func restore_room():
 
 func center_camera():
 	var rect = room.get_used_rect()
-	$Camera2D.position = rect.size * room.cell_size / 2
+	var size = rect.size * room.cell_size
+	var vsize = get_viewport().get_visible_rect().size
+	var ratiox = size.x / (vsize.x - 100)
+	var ratioy = size.y / (vsize.y - 100)
+	var ratio = max(ratiox, ratioy)
+	$Camera2D.position = size / 2
+	$Camera2D.zoom = Vector2(ratio, ratio)
 
 func next_level(door):
 	print("load new level")

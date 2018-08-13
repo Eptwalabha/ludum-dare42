@@ -4,7 +4,7 @@
 [ext_resource path="res://level/room/Room.gd" type="Script" id=2]
 [ext_resource path="res://level/Door.tscn" type="PackedScene" id=3]
 
-[node name="Room" type="TileMap" index="0"]
+[node name="Room" type="TileMap"]
 
 mode = 0
 tile_set = ExtResource( 1 )
@@ -24,13 +24,23 @@ occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 2 )
+spawn_chest_when_cleared = false
+percent_restoration = 1.0
 
 [node name="Start" type="Position2D" parent="." index="0"]
 
 [node name="Entities" type="Node2D" parent="." index="1"]
 
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="Exit" parent="Entities" index="0" instance=ExtResource( 3 )]
 
 [node name="Projectiles" type="Node2D" parent="." index="2"]
+
+__meta__ = {
+"_edit_lock_": true
+}
 
 

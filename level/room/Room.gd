@@ -3,10 +3,9 @@ extends TileMap
 signal room_cleared()
 
 var player = null
-var visited = false
 var cleared = false
-var spawn_chest_when_cleared = false
-var percent_restoration = 1
+export(bool) var spawn_chest_when_cleared = false
+export(float) var percent_restoration = 1.0
 
 var cells_to_restore = []
 
@@ -21,6 +20,8 @@ func init():
 				"pos" : cell,
 				"type" : cellv
 			})
+	var exit_pos = _world_to_map($Entities/Exit.position)
+	set_cellv(exit_pos, 0)
 
 func set_foes(foes):
 	var p_pos = _world_to_map($Start.position)
@@ -46,6 +47,9 @@ func set_data(the_player, level):
 		entity.set_room(self)
 		entity.connect("died", level, "entity_died", [], CONNECT_ONESHOT)
 
+func set_percent_restoration(percent):
+	percent_restoration = percent
+
 func set_locked(locked):
 	$Entities/Exit.locked = locked
 	if locked:
@@ -60,9 +64,11 @@ func set_locked(locked):
 			remove_cell_from_cells_to_restore(key_pos)
 
 func remove_cell_from_cells_to_restore(cell):
-	for i in cells_to_restore:
-		if cells_to_restore[i].pos == cell:
-			cells_to_restore.remove(i)
+	var new_cells = []
+	for cell_data in cells_to_restore:
+		if cell_data.pos != cell:
+			new_cells.append(cell_data)
+	cells_to_restore = new_cells
 
 func random_position():
 	var pos = null
@@ -113,7 +119,6 @@ func restore_floor():
 
 func place_player():
 	var entity = get_entity_at(_world_to_map($Start.position))
-	print(entity, entity == player)
 	if entity == null or entity == player:
 		player.position = $Start.position
 	else:
