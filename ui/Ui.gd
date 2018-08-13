@@ -13,3 +13,6 @@ func player_hp_changed(hp):
 	
 func player_key_count_changed(amount):
 	$ControlNode/MarginContainer/HBoxContainer/Key.text = "key: %d" % amount
+
+func level_changed(level):
+	$ControlNode/MarginContainer/HBoxContainer/Level.text = "basement: %d" % level

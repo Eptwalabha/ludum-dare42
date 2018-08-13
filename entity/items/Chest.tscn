@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ Color( 0.875, 0.608959, 0.0444336, 1 ), Color( 0.875, 0.608959, 0.0444336, 0 ) ]
 }
 
-[node name="Chest" type="Node2D"]
+[node name="Chest" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 hp = 3

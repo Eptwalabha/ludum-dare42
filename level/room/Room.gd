@@ -6,6 +6,8 @@ var player = null
 var cleared = false
 export(bool) var spawn_chest_when_cleared = false
 export(float) var percent_restoration = 1.0
+export(int) var min_level = 0
+export(int) var max_level = 30
 
 var cells_to_restore = []
 

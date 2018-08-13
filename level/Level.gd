@@ -13,6 +13,7 @@ func _ready():
 
 func set_up_entities():
 	$Ui.connect_player($Player)
+	$Ui.level_changed(game.level)
 	room.set_data($Player, self)
 	$Player.connect("died", self, "reset")
 	room.connect("room_cleared", self, "room_cleared", [], CONNECT_ONESHOT)
@@ -86,7 +87,7 @@ func center_camera():
 
 func next_level(door):
 	game.level += 1
-	if game.level > 1:
+	if game.level > 30:
 		get_tree().change_scene("res://game/VictoryScreen.tscn")
 	else:
 		get_tree().reload_current_scene()

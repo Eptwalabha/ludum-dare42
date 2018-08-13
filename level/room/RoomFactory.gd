@@ -22,10 +22,22 @@ func generate(level):
 
 func room_nbr(level):
 	var id = null
+	var templates = available_template(level)
 	while id == null or id == game.last_template_id:
-		id = randi() % 10 +  1
+		id = templates[randi() % templates.size()]
 	game.last_template_id = id
 	return id
+
+func available_template(level):
+	if level == 1:
+		return [1]
+	elif level < 5:
+		return [1, 2, 3, 4, 8, 9, 10]
+	elif level < 10:
+		return [4, 5, 6, 7, 8, 9, 10]
+	elif level < 20:
+		return [6, 7]
+	return [1]
 
 func nbr_foes(level):
 	if level < 5:
@@ -54,7 +66,7 @@ func spawn_foes(level):
 
 func is_door_locked(level):
 	if level < 3:
-		return true
+		return false
 	elif level == 3:
 		return true
 	elif level < 10:

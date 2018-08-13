@@ -26,6 +26,8 @@ tile_data = PoolIntArray(  )
 script = ExtResource( 2 )
 spawn_chest_when_cleared = false
 percent_restoration = 1.0
+min_level = 0
+max_level = 30
 
 [node name="Start" type="Position2D" parent="." index="0"]
 
