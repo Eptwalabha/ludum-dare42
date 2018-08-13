@@ -3,6 +3,7 @@ extends Node
 var FoeFactory = preload("res://entity/foes/FoeFactory.tscn").instance()
 
 func generate(level):
+	randomize()
 	var room_nbr = room_nbr(level)
 	var room = load("res://level/room/templates/Room%d.tscn" % room_nbr).instance()
 	var foes = spawn_foes(level)
@@ -22,9 +23,9 @@ func generate(level):
 func room_nbr(level):
 	var id = null
 	while id == null or id == game.last_template_id:
-		id = randi() % 9 +  1
+		id = randi() % 10 +  1
 	game.last_template_id = id
-	return 10
+	return id
 
 func nbr_foes(level):
 	if level < 5:

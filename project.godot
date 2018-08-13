@@ -11,12 +11,16 @@ config_version=3
 [application]
 
 config/name="ld42"
-run/main_scene="res://levels/LevelTest.tscn"
+run/main_scene="res://game/MenuScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 game="*res://game/game.gd"
+
+[display]
+
+window/size/resizable=false
 
 [layer_names]
 

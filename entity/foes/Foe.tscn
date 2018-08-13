@@ -10,4 +10,8 @@ damage = 1
 action_index = 0
 attack_range = 1
 
+[node name="Area2D" parent="Pivot" index="2"]
+
+visible = true
+
 
