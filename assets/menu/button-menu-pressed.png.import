@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/button.png-bca0d9f3e1e7bc97411cf7086e7888a8.stex"
+path="res://.import/button-menu-pressed.png-6750e84db1514ee5c80387baaae2fed2.stex"
 
 [deps]
 
-source_file="res://assets/menu/button.png"
-dest_files=[ "res://.import/button.png-bca0d9f3e1e7bc97411cf7086e7888a8.stex" ]
+source_file="res://assets/menu/button-menu-pressed.png"
+dest_files=[ "res://.import/button-menu-pressed.png-6750e84db1514ee5c80387baaae2fed2.stex" ]
 
 [params]
 

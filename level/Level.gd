@@ -62,8 +62,7 @@ func reset(entity):
 		room.reset()
 		$Player.revive()
 	else:
-		game.hp = 5
-		get_tree().reload_current_scene()
+		get_tree().change_scene("res://game/GameOver.tscn")
 
 func player_revive():
 	$Player.set_process(true)
