@@ -4,6 +4,12 @@ signal key_count_changed(amount)
 
 func _ready():
 	hp = game.hp
+	set_process(false)
+
+func modify_hp(sum):
+	hp += sum
+	game.hp = hp
+	emit_signal("hp_changed", hp)
 
 func _process(delta):
 	if dead:

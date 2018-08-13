@@ -8,6 +8,7 @@ func action_aim():
 	$Pivot/Sprite.play("aim")
 	$Pivot/Sprite/ArmJoin/Gun.visible = true
 	point_arm_at(player)
+	aim = player.position
 
 func point_arm_at(player):
 	pass

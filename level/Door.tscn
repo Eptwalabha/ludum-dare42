@@ -21,7 +21,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=2]
 
 animations = [ {
 "frames": [ ExtResource( 5 ) ],
@@ -35,7 +35,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 
 custom_solver_bias = 0.0
 radius = 16.0
@@ -59,7 +59,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="KeyPad" type="AnimatedSprite" parent="Position2D/Sprite" index="0"]
 
-frames = SubResource( 3 )
+frames = SubResource( 2 )
 animation = "disable"
 
 [node name="Area2D" type="Area2D" parent="Position2D" index="1"]
@@ -74,6 +74,6 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Position2D/Area2D" index="0"]
 
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 

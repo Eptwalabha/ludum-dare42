@@ -17,8 +17,8 @@ func _ready():
 	pass
 
 
-func set_current_grid(current_grid):
-	grid = current_grid
+func set_room(current_room):
+	grid = current_room
 
 func set_level(current_level):
 	level = current_level
@@ -51,7 +51,7 @@ func room_cleared():
 	pass
 
 func prepare_for_turn():
-	set_process(false)
+	pass
 
 func apply_damages():
 	pass

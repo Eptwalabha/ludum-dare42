@@ -1,47 +1,42 @@
 extends Node
 
-onready var current_grid = $Rooms/Start
+var room = null
 onready var BulletFactory = preload("res://entity/weapon/BulletFactory.tscn").instance()
+onready var RoomFactory = preload("res://level/room/RoomFactory.tscn").instance()
+var cleared_level = 0
 
 func _ready():
+	room = RoomFactory.generate(game.level)
+	get_node("Room").add_child(room)
 	center_camera()
 	set_up_entities()
 
 func set_up_entities():
 	$Ui.connect_player($Player)
-	$Player.set_current_grid(current_grid)
-	$Player.set_level(self)
+	room.set_data($Player, self)
 	$Player.connect("died", self, "reset")
-	for entity in current_grid.get_children():
-		entity.set_current_grid(current_grid)
-		entity.set_level(self)
-		entity.connect("died", self, "entity_died", [], CONNECT_ONESHOT)
-	$Rooms/Start.connect("room_cleared", self, "room_cleared", [], CONNECT_ONESHOT)
-	$Rooms/Start.player = $Player
+	room.connect("room_cleared", self, "room_cleared", [], CONNECT_ONESHOT)
+	$Player.set_process(true)
+	room.start()
 
-func get_current_grid():
-	return current_grid
-
-func _process(delta):
-	pass
+func get_room():
+	return room
 
 func tick():
-	prepare_entities_for_turn()
 	$Player.set_process(false)
-	for entity in current_grid.get_children():
-		entity.tick()
+	room.tick()
 	_timeout("_post_actions", 0.3)
 
 func _post_actions():
-	current_grid.update_entities()
+	room.update_entities()
 	_update_player()
-	if not current_grid.cleared:
-		current_grid.is_room_clear()
+	if not room.cleared:
+		room.is_room_cleared()
 	_apply_damages()
 
 func _apply_damages():
 	var any_hit = $Player.apply_damages()
-	for entity in current_grid.get_children():
+	for entity in room.get_entities():
 		if entity.dead:
 			continue
 		if entity.apply_damages():
@@ -52,43 +47,52 @@ func _apply_damages():
 		_end_turn()
 
 func _end_turn():
-	$Player.set_process(true)
-
-func prepare_entities_for_turn():
-	$Player.prepare_for_turn()
-	for entity in current_grid.get_children():
-		entity.prepare_for_turn()
+	if cleared_level == 1:
+		cleared_level = 2
+		_timeout("restore_room", 0.3)
+	else:
+		$Player.set_process(true)
 
 func _update_player():
-	if current_grid.is_falling($Player):
+	if room.is_falling($Player):
 		$Player.fall()
 
 func reset(entity):
-	game.hp = 5
-	$Player.dead = false
-	get_tree().reload_current_scene()
+	if game.hp > 0:
+		room.reset()
+		$Player.revive()
+	else:
+		game.hp = 5
+		get_tree().reload_current_scene()
+
+func player_revive():
+	$Player.set_process(true)
 
 func room_cleared():
-	for entity in current_grid.get_children():
-		entity.room_cleared()
+	cleared_level = 1
+
+func restore_room():
+	room.restore_floor()
+	$Player.set_process(true)
 
 func center_camera():
-	var rect = $Rooms/Start.get_used_rect()
-	$Camera2D.position = rect.size * $Rooms/Start.cell_size / 2
+	var rect = room.get_used_rect()
+	$Camera2D.position = rect.size * room.cell_size / 2
 
 func next_level(door):
 	print("load new level")
+	game.level += 1
+	get_tree().reload_current_scene()
 
 func spawn_damage(entity, amount):
 	pass
 
 func spawn_bullet(owner, position, direction, speed):
-	var velocity = (direction * speed) * current_grid.cell_size
+	var velocity = (direction * speed) * room.cell_size
 	var bullet = BulletFactory.shoot_at(position, velocity)
 	bullet.set_owner(owner)
 	bullet.damage = owner.damage
-	current_grid.add_child(bullet)
-	bullet.tick()
+	room.add_projectile(bullet)
 
 func _timeout(function_name, wait_time):
 	$Timer.wait_time = wait_time

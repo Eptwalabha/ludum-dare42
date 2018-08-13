@@ -17,6 +17,7 @@ export(int) var action_index = 0
 export(int) var attack_range = 1
 var cool_down = 0
 var player
+var aim = null
 
 func _ready():
 	$Pivot.position = Vector2()
@@ -65,15 +66,18 @@ func action_move():
 	_move_to(random_order)
 
 func action_aim():
-	pass
+	aim = player.position
 
 func action_shoot():
 	look_entity(player)
 	var direction = (player.position - position).normalized()
+	if aim:
+		direction = (aim - position).normalized()
+		aim = null
 	var bullet_position = position
 	if get_node("Pivot/Sprite/ArmJoin"):
 		bullet_position = get_node("Pivot/Sprite/ArmJoin").global_position
-	level.spawn_bullet(self, bullet_position, direction, 2)
+	level.spawn_bullet(self, bullet_position, direction, 1.5)
 	$AnimationPlayer.play("shoot")
 
 func action_chase():

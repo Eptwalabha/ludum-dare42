@@ -8,12 +8,19 @@ enum DIRECTION {
 }
 
 signal hp_changed(hp)
+
 var max_hp = 5
 
 var turn_action = null
 
 func _ready():
 	$Pivot.position = Vector2()
+
+func revive():
+	dead = false
+	$AnimationPlayer.play("revive")
+	yield($AnimationPlayer, "animation_finished")
+	emit_signal("revive")
 
 func move_to(next_position, animation):
 	$Pivot.position = - (next_position - position)
@@ -47,6 +54,7 @@ func fall():
 	if dead:
 		return
 	dead = true
+	modify_hp(-1)
 	$AnimationPlayer.play("fall")
 	yield($AnimationPlayer, "animation_finished")
 	emit_signal("died", self)
@@ -77,15 +85,19 @@ func apply_damages():
 	var hit = false
 	for damage in stack_damages:
 		hit = true
-		sum += damage.amount
+		sum -= damage.amount
 		level.spawn_damage(self, damage.amount)
-	hp -= sum
+	modify_hp(sum)
 	if hit:
 		hurt()
 	if hp <= 0:
 		died()
 	stack_damages = []
 	return hit
+
+func modify_hp(sum):
+	hp += sum
+	emit_signal("hp_changed", hp)
 
 func hurt():
 	$AnimationPlayer.play("hurt")
