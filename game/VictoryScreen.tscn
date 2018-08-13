@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://game/GameOver.gd" type="Script" id=1]
+[ext_resource path="res://game/VictoryScreen.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Tower_Print.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/menu/dead.png" type="Texture" id=3]
+[ext_resource path="res://assets/menu/victory.png" type="Texture" id=3]
 [ext_resource path="res://assets/fonts/font_tower.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/menu/button-menu.png" type="Texture" id=5]
 [ext_resource path="res://assets/menu/button-menu-pressed.png" type="Texture" id=6]
@@ -16,7 +16,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="GameOver" type="Node"]
+[node name="VictoryScreen" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -67,7 +67,6 @@ alignment = 0
 
 [node name="Title" type="MarginContainer" parent="Control/VBoxContainer" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -86,7 +85,6 @@ _sections_unfolded = [ "custom_constants" ]
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/VBoxContainer/Title" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -109,8 +107,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 331.0
-margin_right = 673.0
+margin_left = 205.0
+margin_right = 798.0
 margin_bottom = 71.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -119,7 +117,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 1 )
-text = "GAME OVER"
+text = "Last basement reached!"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -127,7 +125,6 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/VBoxContainer" index="1"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -150,10 +147,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 362.0
-margin_top = 25.0
-margin_right = 662.0
-margin_bottom = 325.0
+margin_left = 401.0
+margin_top = 56.0
+margin_right = 622.0
+margin_bottom = 293.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -179,7 +176,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = ExtResource( 4 )
-text = "Oups!"
+text = "thank you for playing"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0

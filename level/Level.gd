@@ -85,9 +85,11 @@ func center_camera():
 	$Camera2D.zoom = Vector2(ratio, ratio)
 
 func next_level(door):
-	print("load new level")
 	game.level += 1
-	get_tree().reload_current_scene()
+	if game.level > 1:
+		get_tree().change_scene("res://game/VictoryScreen.tscn")
+	else:
+		get_tree().reload_current_scene()
 
 func spawn_damage(entity, amount):
 	pass
