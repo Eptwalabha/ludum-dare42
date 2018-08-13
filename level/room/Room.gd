@@ -5,21 +5,37 @@ signal room_cleared()
 var player = null
 var visited = false
 var cleared = false
+var spawn_chest_when_cleared = false
+var percent_restoration = 1
 
 var cells_to_restore = []
 
 func _ready():
-	init_room()
+	init()
 
-func init_room():
+func init():
 	for cell in get_used_cells():
 		var cellv =  get_cellv(cell)
 		if is_destructible_floor(cellv):
-			cells_to_restore.append(cell)
+			cells_to_restore.append({
+				"pos" : cell,
+				"type" : cellv
+			})
 
 func set_foes(foes):
+	var p_pos = _world_to_map($Start.position)
 	for foe in foes:
-		$Entities.add_child(foe)
+		var attempt = 0
+		var added = false
+		while not added and attempt < 5:
+			var pos = random_position()
+			if pos == null:
+				break
+			if manhattan_dist(pos, p_pos) > 3:
+				foe.position = map_to_world(pos)
+				$Entities.add_child(foe)
+				added = true
+			attempt += 1
 
 func set_data(the_player, level):
 	player = the_player
@@ -29,6 +45,46 @@ func set_data(the_player, level):
 		entity.set_level(level)
 		entity.set_room(self)
 		entity.connect("died", level, "entity_died", [], CONNECT_ONESHOT)
+
+func set_locked(locked):
+	$Entities/Exit.locked = locked
+	if locked:
+		var key = preload("res://entity/items/Key.tscn").instance()
+		var key_pos = random_position()
+		if key_pos == null:
+			$Entities/Exit.locked = false
+		else:
+			key.position = map_to_world(key_pos)
+			set_cellv(key_pos, 3)
+			$Entities.add_child(key)
+			remove_cell_from_cells_to_restore(key_pos)
+
+func remove_cell_from_cells_to_restore(cell):
+	for i in cells_to_restore:
+		if cells_to_restore[i].pos == cell:
+			cells_to_restore.remove(i)
+
+func random_position():
+	var pos = null
+	var size = cells_to_restore.size()
+	var attempt = 0
+	while pos == null and attempt < 20:
+		var random_cell = cells_to_restore[randi() % size].pos
+		if get_entity_at(random_cell) == null:
+			pos = random_cell
+		attempt += 1
+	return pos
+
+func spawn_random_chest():
+	var pos = random_position()
+	if pos == null:
+		return
+	var chest = preload("res://entity/items/Chest.tscn").instance()
+	chest.position = map_to_world(pos)
+	$Entities.add_child(chest)
+	
+func spawn_chest_when_cleared():
+	spawn_chest_when_cleared = true
 
 func get_entities():
 	return $Entities.get_children()
@@ -40,19 +96,35 @@ func tick():
 		projectile.tick()
 
 func reset():
-	player.position = $Start.position
+	place_player()
 	for projectile in $Projectiles.get_children():
 		projectile.queue_free()
 	restore_floor()
 
 func restore_floor():
-	for cell in cells_to_restore:
+	for data in cells_to_restore:
+		var cell = data.pos
+		var type_ori = data.type
 		var type = get_cellv(cell)
-		if type > 1 or type == -1:
-			set_cellv(cell, 1)
+		if type == -1:
+			set_cellv(cell, max(1, data.type))
+		elif type != type_ori and randf() < percent_restoration:
+			set_cellv(cell, max(1, type_ori))
+
+func place_player():
+	var entity = get_entity_at(_world_to_map($Start.position))
+	print(entity, entity == player)
+	if entity == null or entity == player:
+		player.position = $Start.position
+	else:
+		var pos = random_position()
+		if pos == null:
+			player.position = $Start.position
+		else:
+			player.position = map_to_world(pos)
 
 func start():
-	player.position = $Start.position
+	place_player()
 	is_room_cleared()
 
 func request_move(entity, direction):
@@ -100,7 +172,8 @@ func get_entity_at(cell_pos):
 			continue
 		if _world_to_map(entity.position) == cell_pos:
 			return entity
-	if _world_to_map(player.position) == cell_pos:
+
+	if player and _world_to_map(player.position) == cell_pos:
 		return player
 	return null
 
@@ -115,6 +188,8 @@ func is_room_cleared():
 			return false
 	cleared = true
 	emit_signal("room_cleared")
+	if spawn_chest_when_cleared:
+		spawn_random_chest()
 	for entity in $Entities.get_children():
 		entity.room_cleared()
 	return true
@@ -131,11 +206,18 @@ func _world_to_map(entity_position):
 
 func manhattan_vector_to_player(entity):
 	var pos = _world_to_map(entity.position)
-	var player_pos = _world_to_map(player.position)
+	var player_position = $Start.position
+	if player:
+		player_position = player.position
+	var player_pos = _world_to_map(player_position)
 	return Vector2(player_pos.x - pos.x, player_pos.y - pos.y)
 
 func manhattan_dist_to_player(entity):
 	var v = manhattan_vector_to_player(entity)
+	return abs(v.x) + abs(v.y)
+
+func manhattan_dist(pos1, pos2):
+	var v = Vector2(pos1.x - pos2.x, pos1.y - pos2.y)
 	return abs(v.x) + abs(v.y)
 
 func add_projectile(projectile):

@@ -7,7 +7,15 @@ func generate(level):
 	var room = Room_1.instance()
 	var foes = spawn_foes(level)
 	room.position = Vector2()
+	room.init()
+	room.set_locked(is_door_locked(level))
+	var spawn_chest = spawn_chest(level)
+	if spawn_chest:
+		room.spawn_random_chest()
+	if not spawn_chest and spawn_chest_when_room_cleared(level):
+		room.spawn_chest_when_cleared()
 	room.set_foes(foes)
+	room.percent_restoration = percent_restoration(level)
 	return room
 
 func nbr_foes(level):
@@ -33,7 +41,6 @@ func spawn_foes(level):
 		var foe = FoeFactory.generate(random_type)
 		foes.append(foe)
 		pass
-	print("level ", level, " nbr ", nbr_foes, " available ", available_foes)
 	return foes
 
 func is_door_locked(level):
@@ -42,8 +49,36 @@ func is_door_locked(level):
 	elif level == 3:
 		return true
 	elif level < 10:
-		return rand() < 0.5
+		return randf() < 0.5
 	elif level < 20:
-		return rand() < 0.8
+		return randf() < 0.8
 	else:
 		return true
+
+func spawn_chest_when_room_cleared(level):
+	if level < 5:
+		return randf() < 0.8
+	elif level < 10:
+		return randf() < 0.5
+	elif level < 20:
+		return randf() < 0.2
+	else:
+		return false
+
+func spawn_chest(level):
+	if level == 1:
+		return true
+	elif level < 10:
+		return randf() < 0.4
+	elif level < 20:
+		return randf() < 0.2
+	else:
+		return randf() < 0.1
+
+func percent_restoration(level):
+	if level < 10:
+		return .9
+	elif level < 20:
+		return .7
+	else:
+		return .5
