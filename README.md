@@ -31,19 +31,19 @@ This moron is relatively harmless, he cannot see a thing.
 
 ![zombie.png](https://eptwalabha.com/ld42/screenshot/zombie.png)
 
-Rather agressive, he'll chase you down to have a bite at you.
+Rather agressive, he'll chase you down to bite you.
 
 ### André
 
 ![jump.png](https://eptwalabha.com/ld42/screenshot/jump.png)
 
-This guy love to jump around, careful not to get close to him, like the zombie, he'll bite you without hesitation.
+This guy love to jump around, careful not to get too close to him, like Harry, he'll bite you without hesitation.
 
 ### Joe
 
 ![gun.png](https://eptwalabha.com/ld42/screenshot/gun.png)
 
-This is a former security gard that didn't checkout is gun.
+This is a former security gard that didn't checkout is gun when he lost his job.
 
 ## Screenshots
 
