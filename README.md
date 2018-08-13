@@ -10,7 +10,7 @@ Everybody knows this basement is dangerous, they build it on unstable ground and
 This place is a mess its falling appart and it's running out of place to store the drums.
 Not to mention the countless stories about workers that never came back.
 
-Well… down we go!
+Well… [down we go](https://eptwalabha.com/ld42/)!
 
 ![screenshot2.png](https://eptwalabha.com/ld42/screenshot/screen2.png)
 
@@ -27,7 +27,7 @@ Mind where you're walking, the floor breaks easily.
 
 This moron is relatively harmless, he cannot see a thing.
 
-### Zombie
+### Harry
 
 ![zombie.png](https://eptwalabha.com/ld42/screenshot/zombie.png)
 
